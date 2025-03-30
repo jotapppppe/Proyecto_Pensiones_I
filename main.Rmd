@@ -4,26 +4,47 @@ output: html_document
 date: "2025-03-30"
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r}
+source("code/setup.R")
 ```
 
-## R Markdown
+```{r}
+data_CR_PIB_long <- data_CR_PIB %>% 
+  pivot_longer(cols = everything(), names_to = "año", values_to = "valor") %>% 
+  mutate(fecha = ymd(paste0(año, "-01-01")))  # Creamos fecha con formato AAAA-01-01
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+data_CR_PIB_long$valor <- as.numeric(data_CR_PIB_long$valor)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+ggplot(data_CR_PIB_long, aes(x = fecha, y = valor)) +
+  geom_line(color = "olivedrab4", linewidth = 1) +
+  geom_point(color = "black", size = 2) +
+  labs(title = "PIB por año",
+       x = "Años",
+       y = "Valor") +
+  scale_x_date(date_labels = "%Y", 
+               date_breaks = "3 year",
+               expand = expansion(mult = 0.1)) +  # Pequeño margen en los extremos
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5),)
 ```
 
-## Including Plots
+```{r}
+data_CR_PIB_variacion_long <- data_CR_Variacion_PIB %>% 
+  pivot_longer(cols = everything(), names_to = "año", values_to = "valor") %>% 
+  mutate(fecha = ymd(paste0(año, "-01-01")))  # Creamos fecha con formato AAAA-01-01
 
-You can also embed plots, for example:
+data_CR_PIB_variacion_long$valor <- as.numeric(data_CR_PIB_variacion_long$valor)
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+ggplot(data_CR_PIB_variacion_long, aes(x = fecha, y = valor)) +
+  geom_line(color = "olivedrab4", linewidth = 1) +
+  geom_point(color = "black", size = 2) +
+  labs(title = "Variación del PIB por año",
+       x = "Años",
+       y = "Valor (%)") +
+  scale_x_date(date_labels = "%Y", 
+               date_breaks = "3 year",
+               expand = expansion(mult = 0.1)) +  # Pequeño margen en los extremos
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5),)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
