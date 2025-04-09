@@ -16,9 +16,9 @@ data_CR_PIB_long <- data_CR_PIB %>%
 data_CR_PIB_long$valor <- as.numeric(data_CR_PIB_long$valor)
 
 ggplot(data_CR_PIB_long, aes(x = fecha, y = valor)) +
-  geom_line(color = "olivedrab4", linewidth = 1) +
-  geom_point(color = "black", size = 2) +
-  labs(title = "PIB por año",
+  geom_line(color = "#CD5555", linewidth = 1) +
+  geom_point(color = "black", size = 1.5) +
+  labs(title = "Valor del PIB de Costa Rica según el año",
        x = "Años",
        y = "Valor") +
   scale_x_date(date_labels = "%Y", 
@@ -36,9 +36,9 @@ data_CR_PIB_variacion_long <- data_CR_Variacion_PIB %>%
 data_CR_PIB_variacion_long$valor <- as.numeric(data_CR_PIB_variacion_long$valor)
 
 ggplot(data_CR_PIB_variacion_long, aes(x = fecha, y = valor)) +
-  geom_line(color = "olivedrab4", linewidth = 1) +
-  geom_point(color = "black", size = 2) +
-  labs(title = "Variación del PIB por año",
+  geom_line(color = "#CD5555", linewidth = 1) +
+  geom_point(color = "black", size = 1.5) +
+  labs(title = "Variación del PIB de Costa Rica según año",
        x = "Años",
        y = "Valor (%)") +
   scale_x_date(date_labels = "%Y", 
